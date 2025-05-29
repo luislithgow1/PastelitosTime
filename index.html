@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pastelitos Time</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #fff5e6;
+      color: #333;
+    }
+    header {
+      background: linear-gradient(to right, #ffcc00 33%, #0033a0 33%, #0033a0 66%, #d52b1e 66%);
+      padding: 20px 0;
+      text-align: center;
+      color: white;
+      position: relative;
+    }
+    header h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: 3rem;
+      margin: 0;
+      z-index: 1;
+      position: relative;
+    }
+    nav {
+      background-color: #fff;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      display: flex;
+      justify-content: center;
+      padding: 10px 0;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+    nav a {
+      text-decoration: none;
+      color: #0033a0;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    nav a:hover, nav a:focus {
+      text-decoration: underline;
+      outline: none;
+    }
+    .stars {
+      position: absolute;
+      top: 5px;
+      left: 33%;
+      width: 34%;
+      display: flex;
+      justify-content: space-around;
+      z-index: 0;
+      animation: starsGlow 2s infinite alternate;
+    }
+    .star {
+      font-size: 1.5rem;
+      color: white;
+    }
+    @keyframes starsGlow {
+      from {
+        opacity: 0.5;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+    .section {
+      padding: 20px;
+    }
+    .category {
+      margin-bottom: 40px;
+    }
+    .category h2 {
+      color: #0033a0;
+      border-bottom: 2px solid #0033a0;
+      padding-bottom: 5px;
+      margin-bottom: 20px;
+    }
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 20px;
+    }
+    .product {
+      background: white;
+      border-radius: 10px;
+      padding: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .product:hover {
+      transform: scale(1.05);
+    }
+    .product img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+    .cart-section {
+      padding: 20px;
+      background: #fff;
+      border-top: 1px solid #ccc;
+      box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+      max-height: 300px;
+      overflow-y: auto;
+      width: 100%;
+      box-sizing: border-box;
+      position: relative;
+    }
+    .cart-section h3 {
+      margin-top: 0;
+      text-align: center;
+      color: #0033a0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      align-items: center;
+      gap: 10px;
+    }
+    .cart-item input {
+      width: 50px;
+    }
+    .cart-section button {
+      background: #0033a0;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      margin-top: 10px;
+      cursor: pointer;
+      border-radius: 5px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      font-size: 1rem;
+      min-width: 150px;
+      transition: background-color 0.3s ease;
+    }
+    .cart-section button.vaciar {
+      background: #d52b1e;
+      margin-left: 10px;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .cart-section button:hover:not(.vaciar) {
+      background-color: #002080;
+    }
+    .cart-section button.vaciar:hover {
+      background-color: #a12017;
+    }
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .modal-content {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 400px;
+      max-height: 90%;
+      overflow-y: auto;
+    }
+    footer {
+      background-color: #0033a0;
+      color: white;
+      padding: 10px;
+      text-align: center;
+    }
+    .language-selector {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background: white;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      z-index: 1100;
+      padding: 5px 10px;
+      font-weight: bold;
+    }
+    .language-selector select {
+      font-size: 1rem;
+      border-radius: 3px;
+      border: 1px solid #ccc;
+      padding: 3px 5px;
+    }
+    /* Animación para agregar producto */
+    .added-animation {
+      animation: addedPulse 0.5s ease forwards;
+    }
+    @keyframes addedPulse {
+      0% { transform: scale(1); background-color: #fff;}
+      50% { transform: scale(1.1); background-color: #c8f7c5;}
+      100% { transform: scale(1); background-color: #fff;}
+    }
+    /* Mensajes de notificación */
+    #message {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #0033a0;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+      z-index: 1200;
+      font-weight: bold;
+      min-width: 200px;
+      text-align: center;
+    }
+    #message.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  </style>
+</head>
+<body>
+<div class="language-selector" aria-label="Selector de idioma">
+  <label for="languageSelect">Idioma: </label>
+  <select id="languageSelect" aria-describedby="languageSelectDesc">
+    <option value="es">Español</option>
+    <option value="en">English</option>
+    <option value="fr">Français</option>
+  </select>
+</div>
+
+<header>
+  <div class="stars" aria-hidden="true">
+    <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+  </div>
+  <h1 data-i18n="title">Pastelitos Time</h1>
+</header>
+
+<nav>
+  <a href="#pastelitos" data-i18n="nav.pastelitos">Pastelitos</a>
+  <a href="#postres" data-i18n="nav.postres">Postres</a>
+  <a href="#bebidas" data-i18n="nav.bebidas">Bebidas</a>
+  <a href="#carrito" data-i18n="nav.carrito">Carrito</a>
+  <a href="#contacto" data-i18n="nav.contacto">Contacto</a>
+</nav>
+
+<main>
+  <section class="section category" id="pastelitos">
+    <h2 data-i18n="categories.pastelitos">Pastelitos</h2>
+    <div class="products" id="pastelitos-list"></div>
+  </section>
+
+  <section class="section category" id="postres">
+    <h2 data-i18n="categories.postres">Postres</h2>
+    <div class="products" id="postres-list"></div>
+  </section>
+
+  <section class="section category" id="bebidas">
+    <h2 data-i18n="categories.bebidas">Bebidas</h2>
+    <div class="products" id="bebidas-list"></div>
+  </section>
+
+  <section class="section cart-section" id="carrito" aria-live="polite" aria-label="Carrito de compras">
+    <h3 data-i18n="cart.title">Carrito de Compras</h3>
+    <div id="cart-items"></div>
+    <div style="text-align:center; margin-top: 10px;">
+      <button id="vaciar-carrito" class="vaciar" aria-label="Vaciar carrito">Vaciar carrito</button>
+      <button id="confirmar-pedido" aria-label="Confirmar pedido">Enviar Pedido por WhatsApp</button>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p><span data-i18n="footer.phone">Teléfono</span>: +1 (609) 336-1797 | <span data-i18n="footer.whatsapp">WhatsApp</span>: +1 (609) 336-1797</p>
+  <p><span data-i18n="footer.hours">Horario</span>: Lun-Dom 08:00 Am-09:00 Pm</p>
+  <p>📍 107 Bennington Drive East Windsor, NJ</p>
+</footer>
+
+<div id="message" role="alert" aria-live="assertive"></div>
+
+<script>
+  // Traducciones
+  const translations = {
+    es: {
+      title: "Pastelitos Time",
+      nav: {
+        pastelitos: "Pastelitos",
+        postres: "Postres",
+        bebidas: "Bebidas",
+        carrito: "Carrito",
+        contacto: "Contacto"
+      },
+      categories: {
+        pastelitos: "Pastelitos",
+        postres: "Postres",
+        bebidas: "Bebidas"
+      },
+      cart: {
+        title: "Carrito de Compras",
+        emptyBtn: "Vaciar carrito",
+        confirmBtn: "Enviar Pedido por WhatsApp",
+        emptyMsg: "Tu carrito está vacío",
+        qtyLabel: "Cantidad",
+        remove: "Eliminar"
+      },
+      modal: {
+        title: "Resumen de Compra",
+        prepTime: "Tiempo estimado de preparación",
+        paymentMethod: "Método de Pago",
+        zelleNumber: "Número Zelle",
+        confirmBtn: "Confirmar y Enviar",
+        cancelBtn: "Cancelar",
+        emptyCart: "No hay productos en el carrito."
+      },
+      footer: {
+        phone: "Teléfono",
+        whatsapp: "WhatsApp",
+        hours: "Horario"
+      }
+    },
+    en: {
+      title: "Pastelitos Time",
+      nav: {
+        pastelitos: "Pastries",
+        postres: "Desserts",
+        bebidas: "Drinks",
+        carrito: "Cart",
+        contacto: "Contact"
+      },
+      categories: {
+        pastelitos: "Pastries",
+        postres: "Desserts",
+        bebidas: "Drinks"
+      },
+      cart: {
+        title: "Shopping Cart",
+        emptyBtn: "Empty Cart",
+        confirmBtn: "Send Order via WhatsApp",
+        emptyMsg: "Your cart is empty",
+        qtyLabel: "Quantity",
+        remove: "Remove"
+      },
+      modal: {
+        title: "Order Summary",
+        prepTime: "Estimated Preparation Time",
+        paymentMethod: "Payment Method",
+        zelleNumber: "Zelle Number",
+        confirmBtn: "Confirm and Send",
+        cancelBtn: "Cancel",
+        emptyCart: "No products in cart."
+      },
+      footer: {
+        phone: "Phone",
+        whatsapp: "WhatsApp",
+        hours: "Hours"
+      }
+    },
+    fr: {
+      title: "Pastelitos Time",
+      nav: {
+        pastelitos: "Pâtisseries",
+        postres: "Desserts",
+        bebidas: "Boissons",
+        carrito: "Panier",
+        contacto: "Contact"
+      },
+      categories: {
+        pastelitos: "Pâtisseries",
+        postres: "Desserts",
+        bebidas: "Boissons"
+      },
+      cart: {
+        title: "Panier d'achat",
+        emptyBtn: "Vider le panier",
+        confirmBtn: "Envoyer la commande via WhatsApp",
+        emptyMsg: "Votre panier est vide",
+        qtyLabel: "Quantité",
+        remove: "Supprimer"
+      },
+      modal: {
+        title: "Résumé de la commande",
+        prepTime: "Temps de préparation estimé",
+        paymentMethod: "Méthode de paiement",
+        zelleNumber: "Numéro Zelle",
+        confirmBtn: "Confirmer et envoyer",
+        cancelBtn: "Annuler",
+        emptyCart: "Aucun produit dans le panier."
+      },
+      footer: {
+        phone: "Téléphone",
+        whatsapp: "WhatsApp",
+        hours: "Heures"
+      }
+    }
+  };
+
+  // Productos
+  const products = {
+    pastelitos: [
+      { id: "pollo", name: { es: "Pollo", en: "Chicken", fr: "Poulet" }, price: 3.00, img: "https://imgur.com/y7wL3bc.png" },
+      { id: "carne", name: { es: "Carne", en: "Beef", fr: "Boeuf" }, price: 3.00, img: "https://imgur.com/jQBvngg.png" },
+      { id: "queso", name: { es: "Queso", en: "Cheese", fr: "Fromage" }, price: 3.00, img: "https://imgur.com/t9qUjhE.png" },
+      { id: "Papa_queso", name: { es: "Papa con Queso", en: "Potato with Cheese", fr: "Pomme de terre avec fromage" }, price: 3.00, img: "https://imgur.com/DKHlMnr.png" },
+      { id: "Pizza", name: { es: "Pizza", en: "Pizza", fr: "pizza" }, price: 3.00, img: "https://imgur.com/ltP2GEL.png" },
+      { id: "jamon_queso", name: { es: "Jamón y Queso", en: "Ham and Cheese", fr: "Jambon et fromage" }, price: 3.00, img: "https://imgur.com/WT2Ft3R.png" },
+      { id: "tequeno", name: { es: "Tequeño", en: "Cheese Stick", fr: "Bâtonnet de Fromage" }, price: 2.00, img: "https://imgur.com/1WYoL1t.png" }
+    ],
+    bebidas: [
+      { id: "jugo_Limon", name: { es: "Jugo Limón", en: "Lemon Juice", fr: "Jus de citron" }, price: 4.00, img: "https://i.imgur.com/7DCxwvO.png" },
+      { id: "jugo_Parchita", name: { es: "Jugo Parchita", en: "Passion Fruit Juice", fr: "Jus de fruit de la passion" }, price: 4.00, img: "https://i.imgur.com/XDZC5G0.png" },
+      { id: "tamarindo", name: { es: "Jugo de Tamarindo", en: "Tamarind Juice", fr: "Jus de Tamarinde" }, price: 4.00, img: "https://i.imgur.com/wXlkm6p.png" },
+      { id: "Refresco", name: { es: "Refresco", en: "Soft Drink", fr: "Soda" }, price: 1.00, img: "https://i.imgur.com/tsUUJDU.png" },
+      { id: "Malta", name: { es: "Malta Maltin Polar", en: "Malt Drink", fr: "Boisson Maltée" }, price: 3.00, img: "https://imgur.com/556IVMv.png" }
+    ],
+    postres: [
+      { id: "Flan", name: { es: "Flan", en: "Flan", fr: "Flan" }, price: 25.00, img: "https://i.imgur.com/kyBJJYf.png" },
+      { id: "Tres_leche_mediano", name: { es: "Tres Leche Mediano", en: "Medium Tres Leches", fr: "Trois Laits Moyen" }, price: 25.00, img: "https://i.imgur.com/AGrtUKt.png" },
+      { id: "tresleches_grande", name: { es: "Tres Leches Grande", en: "Large Tres Leches", fr: "Grand Trois Laits" }, price: 65.00, img: "https://i.imgur.com/aYZy8VI.png" }
+    ]
+  };
+
+  // Variables globales
+  let carrito = JSON.parse(localStorage.getItem('carritoPastelitosTime')) || {};
+
+  // Mostrar mensaje temporal (éxito o error)
+  function mostrarMensaje(texto, duracion = 3000) {
+    const msg = document.getElementById("message");
+    msg.textContent = texto;
+    msg.classList.add("show");
+    clearTimeout(msg.timeout);
+    msg.timeout = setTimeout(() => {
+      msg.classList.remove("show");
+    }, duracion);
+  }
+
+  // Guardar carrito en localStorage
+  function guardarCarrito() {
+    localStorage.setItem('carritoPastelitosTime', JSON.stringify(carrito));
+  }
+
+  // Crear elemento HTML para un producto
+  function crearProductoElemento(product, lang) {
+    const div = document.createElement("div");
+    div.className = "product";
+    div.setAttribute("tabindex", "0");
+    div.setAttribute("role", "button");
+    div.setAttribute("aria-label", `${product.name[lang]} $${product.price.toFixed(2)}. Agregar al carrito`);
+    div.innerHTML = `
+      <img src="${product.img}" alt="${product.name[lang]}" />
+      <h3>${product.name[lang]}</h3>
+      <p>$${product.price.toFixed(2)}</p>
+      <button type="button" aria-label="Agregar ${product.name[lang]} al carrito" class="add-to-cart-btn">${translations[lang].cart.confirmBtn}</button>
+    `;
+    return div;
+  }
+
+  // Renderizar productos por categoría
+  function renderizarProductos(lang) {
+    Object.keys(products).forEach(category => {
+      const contenedor = document.getElementById(`${category}-list`);
+      contenedor.innerHTML = "";
+      products[category].forEach(product => {
+        const prodElem = crearProductoElemento(product, lang);
+        prodElem.querySelector("button").addEventListener("click", () => agregarAlCarrito(product.id, lang));
+        contenedor.appendChild(prodElem);
+      });
+    });
+  }
+
+  // Agregar producto al carrito
+  function agregarAlCarrito(productId, lang) {
+    if (carrito[productId]) {
+      carrito[productId].cantidad++;
+    } else {
+      // Encontrar producto en cualquiera de las categorías
+      let prod = null;
+      for (const cat in products) {
+        prod = products[cat].find(p => p.id === productId);
+        if (prod) break;
+      }
+      if (!prod) return;
+
+      carrito[productId] = { ...prod, cantidad: 1 };
+    }
+    guardarCarrito();
+    renderizarCarrito(lang);
+    animarAgregar(productId);
+    mostrarMensaje(`${carrito[productId].name[lang]} agregado al carrito`);
+  }
+
+  // Animar al agregar producto
+  function animarAgregar(productId) {
+    // Encontrar producto en la lista y animar
+    const allProducts = document.querySelectorAll(".product");
+    allProducts.forEach(prodElem => {
+      const img = prodElem.querySelector("img");
+      if (!img) return;
+      const alt = img.alt;
+      for (const cat in products) {
+        const prod = products[cat].find(p => p.name.es === alt || p.name.en === alt || p.name.fr === alt);
+        if (prod && prod.id === productId) {
+          prodElem.classList.add("added-animation");
+          setTimeout(() => {
+            prodElem.classList.remove("added-animation");
+          }, 600);
+        }
+      }
+    });
+  }
+
+  // Renderizar carrito
+  function renderizarCarrito(lang) {
+    const contenedor = document.getElementById("cart-items");
+    contenedor.innerHTML = "";
+
+    const keys = Object.keys(carrito);
+    if (keys.length === 0) {
+      contenedor.textContent = translations[lang].cart.emptyMsg;
+      return;
+    }
+
+    keys.forEach(id => {
+      const item = carrito[id];
+      const div = document.createElement("div");
+      div.className = "cart-item";
+      div.innerHTML = `
+        <span>${item.name[lang]}</span>
+        <input type="number" min="1" max="20" value="${item.cantidad}" aria-label="${translations[lang].cart.qtyLabel} ${item.name[lang]}" />
+        <span>$${(item.price * item.cantidad).toFixed(2)}</span>
+        <button aria-label="${translations[lang].cart.remove} ${item.name[lang]}">&times;</button>
+      `;
+      // Cambiar cantidad
+      div.querySelector("input").addEventListener("change", e => {
+        let val = parseInt(e.target.value);
+        if (isNaN(val) || val < 1) val = 1;
+        if (val > 20) val = 20;
+        e.target.value = val;
+        carrito[id].cantidad = val;
+        guardarCarrito();
+        renderizarCarrito(lang);
+      });
+      // Eliminar producto
+      div.querySelector("button").addEventListener("click", () => {
+        delete carrito[id];
+        guardarCarrito();
+        renderizarCarrito(lang);
+        mostrarMensaje(`${item.name[lang]} eliminado del carrito`);
+      });
+      contenedor.appendChild(div);
+    });
+  }
+
+  // Vaciar carrito
+  function vaciarCarrito(lang) {
+    if (confirm(lang === 'es' ? '¿Seguro que quieres vaciar el carrito?' : lang === 'en' ? 'Are you sure you want to empty the cart?' : 'Voulez-vous vraiment vider le panier?')) {
+      carrito = {};
+      guardarCarrito();
+      renderizarCarrito(lang);
+      mostrarMensaje(lang === 'es' ? 'Carrito vaciado' : lang === 'en' ? 'Cart emptied' : 'Panier vidé');
+    }
+  }
+
+  // Confirmar pedido por WhatsApp
+  function confirmarPedido(lang) {
+    const items = Object.values(carrito);
+    if (items.length === 0) {
+      mostrarMensaje(translations[lang].cart.emptyMsg);
+      return;
+    }
+    let mensaje = `${translations[lang].cart.confirmBtn}:\n\n`;
+    items.forEach(item => {
+      mensaje += `- ${item.name[lang]} x${item.cantidad} = $${(item.price * item.cantidad).toFixed(2)}\n`;
+    });
+    const total = items.reduce((acc, item) => acc + item.price * item.cantidad, 0);
+    mensaje += `\nTotal: $${total.toFixed(2)}\n\n`;
+    mensaje += lang === 'es' ?
+      "Método de pago: Zelle\nNúmero: +1 (609) 336-1797" :
+      lang === 'en' ?
+      "Payment method: Zelle\nNumber: +1 (609) 336-1797" :
+      "Méthode de paiement : Zelle\nNuméro : +1 (609) 336-1797";
+
+    const url = `https://wa.me/16093361797?text=${encodeURIComponent(mensaje)}`;
+    window.open(url, "_blank");
+  }
+
+  // Cambiar idioma
+  function cambiarIdioma(lang) {
+    // Cambiar textos estáticos con data-i18n
+    document.querySelectorAll("[data-i18n]").forEach(el => {
+      const keys = el.getAttribute("data-i18n").split(".");
+      let text = translations[lang];
+      for (const key of keys) {
+        if (text[key]) text = text[key];
+        else {
+          text = null;
+          break;
+        }
+      }
+      if (text) el.textContent = text;
+    });
+
+    // Cambiar productos
+    renderizarProductos(lang);
+
+    // Renderizar carrito
+    renderizarCarrito(lang);
+
+    // Actualizar botones
+    document.getElementById("vaciar-carrito").textContent = translations[lang].cart.emptyBtn;
+    document.getElementById("confirmar-pedido").textContent = translations[lang].cart.confirmBtn;
+  }
+
+  // Iniciar app
+  document.addEventListener("DOMContentLoaded", () => {
+    const langSelect = document.getElementById("languageSelect");
+    let lang = localStorage.getItem('pastelitosTimeLang') || 'es';
+
+    langSelect.value = lang;
+
+    cambiarIdioma(lang);
+
+    langSelect.addEventListener("change", () => {
+      lang = langSelect.value;
+      localStorage.setItem('pastelitosTimeLang', lang);
+      cambiarIdioma(lang);
+    });
+
+    document.getElementById("vaciar-carrito").addEventListener("click", () => vaciarCarrito(lang));
+    document.getElementById("confirmar-pedido").addEventListener("click", () => confirmarPedido(lang));
+  });
+</script>
+</body>
+</html>
