@@ -290,8 +290,8 @@
     <a href="#pastelitos" data-i18n="nav.pastelitos">Pastelitos</a>
     <a href="#postres" data-i18n="nav.postres">Postres</a>
     <a href="#bebidas" data-i18n="nav.bebidas">Bebidas</a>
+    <a href="#partybox" data-i18n="nav.partybox">Party Box</a>
     <a href="#carrito" data-i18n="nav.carrito">Carrito</a>
-  
   </nav>
 
   <main>
@@ -308,6 +308,11 @@
     <section class="section category" id="bebidas">
       <h2 data-i18n="categories.bebidas">Bebidas</h2>
       <div class="products" id="bebidas-list"></div>
+    </section>
+
+    <section class="section category" id="partybox">
+      <h2 data-i18n="categories.partybox">Party Box</h2>
+      <div class="products" id="partybox-list"></div>
     </section>
 
     <section class="section cart-section" id="carrito" aria-live="polite" aria-label="Carrito de compras">
@@ -354,13 +359,15 @@
           pastelitos: "Pastelitos",
           postres: "Postres",
           bebidas: "Bebidas",
+          partybox: "Party Box",
           carrito: "Carrito",
           contacto: "Contacto"
         },
         categories: {
           pastelitos: "Pastelitos",
           postres: "Postres",
-          bebidas: "Bebidas"
+          bebidas: "Bebidas",
+          partybox: "Party Box"
         },
         cart: {
           title: "Carrito de Compras",
@@ -391,18 +398,20 @@
           pastelitos: "Pastries",
           postres: "Desserts",
           bebidas: "Drinks",
+          partybox: "Party Box",
           carrito: "Cart",
           contacto: "Contact"
         },
         categories: {
           pastelitos: "Pastries",
           postres: "Desserts",
-          bebidas: "Drinks"
+          bebidas: "Drinks",
+          partybox: "Party Box"
         },
         cart: {
           title: "Shopping Cart",
           emptyBtn: "Empty Cart",
-          confirmBtn: "Send Order via WhatsApp",
+          confirmBtn: "Add to cart",
           emptyMsg: "Your cart is empty",
           qtyLabel: "Quantity",
           remove: "Remove"
@@ -428,18 +437,20 @@
           pastelitos: "Pâtisseries",
           postres: "Desserts",
           bebidas: "Boissons",
+          partybox: "Boîte de Fête",
           carrito: "Panier",
           contacto: "Contact"
         },
         categories: {
           pastelitos: "Pâtisseries",
           postres: "Desserts",
-          bebidas: "Boissons"
+          bebidas: "Boissons",
+          partybox: "Boîte de Fête"
         },
         cart: {
           title: "Panier d'achat",
           emptyBtn: "Vider le panier",
-          confirmBtn: "Envoyer la commande via WhatsApp",
+          confirmBtn: "Ajouter au Panier",
           emptyMsg: "Votre panier est vide",
           qtyLabel: "Quantité",
           remove: "Supprimer"
@@ -576,6 +587,33 @@
           price: 65.0,
           img: "https://i.imgur.com/aYZy8VI.png"
         }
+      ],
+      partybox: [
+        {
+          id: "box40",
+          name: { es: "Party Box 40 unidades", en: "Party Box 40 units", fr: "Boîte de Fête 40 unités" },
+          price: 55.0,
+          img: "https://imgur.com/3ammoUs.png",
+                  },
+        {
+          id: "box50",
+          name: { es: "Party Box 50 unidades", en: "Party Box 50 units", fr: "Boîte de Fête 50 unités" },
+          price: 65.0,
+          img: "https://imgur.com/3ammoUs.png",
+           },
+        {
+          id: "box80",
+          name: { es: "Party Box 80 unidades", en: "Party Box 80 units", fr: "Boîte de Fête 80 unités" },
+          price: 100.0,
+          img: "https://imgur.com/3ammoUs.png",
+          
+        },
+        {
+          id: "box100",
+          name: { es: "Party Box 100 unidades", en: "Party Box 100 units", fr: "Boîte de Fête 100 unités" },
+          price: 125.0,
+          img: "https://imgur.com/3ammoUs.png",
+           }
       ]
     };
 
@@ -607,10 +645,19 @@
         "aria-label",
         `${product.name[lang]} $${product.price.toFixed(2)}. Agregar al carrito`
       );
-      div.innerHTML = `
+      
+      let html = `
         <img src="${product.img}" alt="${product.name[lang]}" />
         <h3>${product.name[lang]}</h3>
         <p>$${product.price.toFixed(2)}</p>
+      `;
+      
+      // Agregar descripción si existe (para Party Box)
+      if (product.description) {
+        html += `<p style="font-size: 0.9em; color: #666;">${product.description[lang]}</p>`;
+      }
+      
+      html += `
         <div>
           <label for="qty-${product.id}" style="display:none;">${translations[lang].cart.qtyLabel}</label>
           <input
@@ -631,6 +678,8 @@
           </button>
         </div>
       `;
+      
+      div.innerHTML = html;
       return div;
     }
 
@@ -638,16 +687,18 @@
     function renderizarProductos(lang) {
       Object.keys(products).forEach((category) => {
         const contenedor = document.getElementById(`${category}-list`);
-        contenedor.innerHTML = "";
-        products[category].forEach((product) => {
-          const prodElem = crearProductoElemento(product, lang);
-          const btn = prodElem.querySelector(".add-to-cart-btn");
-          const qtyInput = prodElem.querySelector(`input[id="qty-${product.id}"]`);
-          btn.addEventListener("click", () =>
-            agregarAlCarrito(product.id, parseInt(qtyInput.value, 10), lang)
-          );
-          contenedor.appendChild(prodElem);
-        });
+        if (contenedor) {
+          contenedor.innerHTML = "";
+          products[category].forEach((product) => {
+            const prodElem = crearProductoElemento(product, lang);
+            const btn = prodElem.querySelector(".add-to-cart-btn");
+            const qtyInput = prodElem.querySelector(`input[id="qty-${product.id}"]`);
+            btn.addEventListener("click", () =>
+              agregarAlCarrito(product.id, parseInt(qtyInput.value, 10), lang)
+            );
+            contenedor.appendChild(prodElem);
+          });
+        }
       });
     }
 
