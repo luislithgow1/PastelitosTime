@@ -4,59 +4,97 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Pastelitos Time - Deliciosos pastelitos venezolanos, postres y bebidas. Ordena en línea y recibe por WhatsApp." />
+  <meta name="keywords" content="pastelitos, comida venezolana, postres, bebidas, delivery, East Windsor">
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
   <title>Pastelitos Time</title>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
-    rel="stylesheet"
-  />
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --primary-color: #0033a0;
+      --secondary-color: #ffcc00;
+      --accent-color: #d52b1e;
+      --light-bg: #fff5e6;
+      --white: #ffffff;
+      --text-color: #333333;
+      --light-text: #666666;
+      --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #fff5e6;
-      color: #333;
+      font-family: 'Roboto', Arial, sans-serif;
+      background: var(--light-bg);
+      color: var(--text-color);
+      line-height: 1.6;
     }
+    
     header {
       background: linear-gradient(
         to right,
-        #ffcc00 33%,
-        #0033a0 33%,
-        #0033a0 66%,
-        #d52b1e 66%
+        var(--secondary-color) 33%,
+        var(--primary-color) 33%,
+        var(--primary-color) 66%,
+        var(--accent-color) 66%
       );
       padding: 20px 0;
       text-align: center;
-      color: white;
+      color: var(--white);
       position: relative;
+      box-shadow: var(--shadow);
     }
+    
     header h1 {
       font-family: 'Pacifico', cursive;
-      font-size: 3rem;
+      font-size: clamp(2rem, 5vw, 3.5rem);
       margin: 0;
       z-index: 1;
       position: relative;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
     }
+    
     nav {
-      background-color: #fff;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      background-color: var(--white);
+      box-shadow: var(--shadow);
       display: flex;
       justify-content: center;
-      padding: 10px 0;
-      gap: 15px;
+      padding: 15px 0;
+      gap: 20px;
       flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
+    
     nav a {
       text-decoration: none;
-      color: #0033a0;
-      font-weight: bold;
+      color: var(--primary-color);
+      font-weight: 500;
       cursor: pointer;
+      padding: 5px 10px;
+      border-radius: 5px;
+      transition: var(--transition);
+      font-size: 1.1rem;
     }
+    
     nav a:hover,
     nav a:focus {
-      text-decoration: underline;
+      background-color: var(--primary-color);
+      color: var(--white);
       outline: none;
     }
+    
+    nav a.active {
+      background-color: var(--primary-color);
+      color: var(--white);
+    }
+    
     .stars {
       position: absolute;
       top: 5px;
@@ -67,10 +105,13 @@
       z-index: 0;
       animation: starsGlow 2s infinite alternate;
     }
+    
     .star {
-      font-size: 1.5rem;
-      color: white;
+      font-size: clamp(1rem, 2vw, 1.5rem);
+      color: var(--white);
+      text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
     }
+    
     @keyframes starsGlow {
       from {
         opacity: 0.5;
@@ -79,183 +120,479 @@
         opacity: 1;
       }
     }
-    .section {
+    
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
       padding: 20px;
     }
+    
+    .section {
+      padding: 20px 0;
+      scroll-margin-top: 80px;
+    }
+    
     .category {
       margin-bottom: 40px;
     }
+    
     .category h2 {
-      color: #0033a0;
-      border-bottom: 2px solid #0033a0;
-      padding-bottom: 5px;
-      margin-bottom: 20px;
+      color: var(--primary-color);
+      border-bottom: 2px solid var(--primary-color);
+      padding-bottom: 10px;
+      margin-bottom: 25px;
+      font-size: 1.8rem;
+      display: flex;
+      align-items: center;
     }
+    
+    .category h2::after {
+      content: "";
+      flex: 1;
+      margin-left: 15px;
+      height: 2px;
+      background: linear-gradient(to right, var(--primary-color), transparent);
+    }
+    
     .products {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 25px;
     }
+    
     .product {
-      background: white;
+      background: var(--white);
       border-radius: 10px;
-      padding: 10px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      padding: 15px;
+      box-shadow: var(--shadow);
       text-align: center;
       cursor: pointer;
-      transition: transform 0.3s ease;
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
     }
+    
     .product:hover {
-      transform: scale(1.05);
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     }
+    
     .product img {
       width: 100%;
-      height: 120px;
+      height: 180px;
       object-fit: cover;
-      border-radius: 5px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      transition: var(--transition);
     }
-    .cart-section {
-      padding: 20px;
-      background: #fff;
-      border-top: 1px solid #ccc;
-      box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-      max-height: 300px;
-      overflow-y: auto;
-      width: 100%;
-      box-sizing: border-box;
-      position: relative;
+    
+    .product:hover img {
+      transform: scale(1.03);
     }
-    .cart-section h3 {
-      margin-top: 0;
+    
+    .product h3 {
+      margin: 0 0 10px;
+      color: var(--primary-color);
+      font-size: 1.2rem;
+      flex-grow: 1;
+    }
+    
+    .product p.price {
+      font-weight: bold;
+      font-size: 1.3rem;
+      color: var(--accent-color);
+      margin: 10px 0;
+    }
+    
+    .product .description {
+      font-size: 0.9rem;
+      color: var(--light-text);
+      margin-bottom: 15px;
+      flex-grow: 1;
+    }
+    
+    .product .product-actions {
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    
+    .product input[type="number"] {
+      width: 60px;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
       text-align: center;
-      color: #0033a0;
+      font-size: 1rem;
+    }
+    
+    .product button.add-to-cart-btn {
+      background: var(--primary-color);
+      color: var(--white);
+      border: none;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: var(--transition);
+      font-size: 1rem;
+      white-space: nowrap;
+    }
+    
+    .product button.add-to-cart-btn:hover {
+      background: #002080;
+    }
+    
+    /* CARRO CORREGIDO - Eliminamos position: sticky */
+    .cart-section {
+      padding: 25px;
+      background: var(--white);
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      margin-top: 40px;
+      z-index: 50;
+      margin-bottom: 20px;
+    }
+    
+    .cart-section h3 {
+      margin: 0 0 20px;
+      text-align: center;
+      color: var(--primary-color);
+      font-size: 1.5rem;
       display: flex;
       justify-content: center;
       align-items: center;
       gap: 10px;
-      flex-wrap: wrap;
     }
+    
+    .cart-section h3::before,
+    .cart-section h3::after {
+      content: "🛒";
+      font-size: 1.2rem;
+    }
+    
+    #cart-items {
+      max-height: 300px;
+      overflow-y: auto;
+      padding-right: 10px;
+    }
+    
     .cart-item {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 10px;
       align-items: center;
-      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+      gap: 15px;
     }
+    
+    .cart-item:last-child {
+      border-bottom: none;
+    }
+    
+    .cart-item span:first-child {
+      flex: 1;
+      text-align: left;
+    }
+    
     .cart-item input {
-      width: 50px;
+      width: 60px;
+      padding: 5px;
+      text-align: center;
+      border: 1px solid #ddd;
+      border-radius: 4px;
     }
-    .cart-section .button-group {
+    
+    .cart-item span.price {
+      font-weight: bold;
+      min-width: 70px;
+      text-align: right;
+    }
+    
+    .cart-item button {
+      background: none;
+      border: none;
+      color: var(--accent-color);
+      font-size: 1.3rem;
+      cursor: pointer;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: var(--transition);
+    }
+    
+    .cart-item button:hover {
+      background: #f8d7da;
+    }
+    
+    .cart-total {
+      font-weight: bold;
+      text-align: right;
+      margin-top: 15px;
+      font-size: 1.2rem;
+      padding-top: 15px;
+      border-top: 2px solid var(--primary-color);
+    }
+    
+    .button-group {
       display: flex;
       justify-content: center;
-      gap: 10px;
+      gap: 15px;
       flex-wrap: wrap;
-      margin-top: 10px;
+      margin-top: 20px;
     }
+    
     .cart-section button {
-      background: #0033a0;
-      color: white;
+      background: var(--primary-color);
+      color: var(--white);
       border: none;
-      padding: 8px 15px;
+      padding: 12px 20px;
       cursor: pointer;
       border-radius: 5px;
       font-size: 1rem;
-      min-width: 150px;
-      transition: background-color 0.3s ease;
+      min-width: 180px;
+      transition: var(--transition);
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
     }
+    
     .cart-section button.vaciar {
-      background: #d52b1e;
+      background: var(--accent-color);
     }
+    
     .cart-section button:hover:not(.vaciar) {
       background-color: #002080;
+      transform: translateY(-2px);
     }
+    
     .cart-section button.vaciar:hover {
       background-color: #a12017;
+      transform: translateY(-2px);
     }
-    .modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
+    
+    .cart-section button i {
+      font-size: 1.2rem;
     }
-    .modal-content {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      width: 90%;
-      max-width: 400px;
-      max-height: 90%;
-      overflow-y: auto;
-    }
-    footer {
-      background-color: #0033a0;
-      color: white;
-      padding: 10px;
-      text-align: center;
-    }
-    .language-selector {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      background: white;
-      border-radius: 5px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-      z-index: 1100;
-      padding: 5px 10px;
-      font-weight: bold;
-    }
-    .language-selector select {
-      font-size: 1rem;
-      border-radius: 3px;
-      border: 1px solid #ccc;
-      padding: 3px 5px;
-    }
-    /* Animación para agregar producto */
-    .added-animation {
-      animation: addedPulse 0.5s ease forwards;
-    }
-    @keyframes addedPulse {
-      0% {
-        transform: scale(1);
-        background-color: #fff;
-      }
-      50% {
-        transform: scale(1.1);
-        background-color: #c8f7c5;
-      }
-      100% {
-        transform: scale(1);
-        background-color: #fff;
-      }
-    }
-    /* Mensajes de notificación */
+    
     #message {
       position: fixed;
-      top:20px;
-      right: 15%;
+      top: 20px;
+      right: 20px;
       background-color: #2ecc71;
       color: white;
-      padding: 10px 20px;
+      padding: 15px 25px;
       border-radius: 5px;
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.5s ease;
       z-index: 1200;
       font-weight: bold;
-      min-width: 200px;
+      min-width: 250px;
       text-align: center;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
     }
+    
+    #message.error {
+      background-color: #e74c3c;
+    }
+    
     #message.show {
       opacity: 1;
-      pointer-events: auto;
+    }
+    
+    .language-selector {
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      background: var(--white);
+      border-radius: 5px;
+      box-shadow: var(--shadow);
+      z-index: 1100;
+      padding: 8px 12px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .language-selector select {
+      font-size: 1rem;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+      padding: 5px;
+      background: var(--white);
+      cursor: pointer;
+    }
+    
+    /* Animación para agregar producto */
+    .added-animation {
+      animation: addedPulse 0.6s ease forwards;
+    }
+    
+    @keyframes addedPulse {
+      0% {
+        transform: scale(1);
+        box-shadow: var(--shadow);
+      }
+      50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 15px rgba(46, 204, 113, 0.7);
+      }
+      100% {
+        transform: scale(1);
+        box-shadow: var(--shadow);
+      }
+    }
+    
+    footer {
+      background-color: var(--primary-color);
+      color: var(--white);
+      padding: 30px 20px;
+      text-align: center;
+      margin-top: 50px;
+    }
+    
+    footer p {
+      margin: 10px 0;
+    }
+    
+    footer a {
+      color: var(--secondary-color);
+      font-weight: bold;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+    
+    footer a:hover {
+      text-decoration: underline;
+      opacity: 0.9;
+    }
+    
+    .social-links {
+      margin: 20px 0;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+    
+    .social-links a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      transition: var(--transition);
+    }
+    
+    .social-links a:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-3px);
+    }
+    
+    .copyright {
+      font-size: 0.9rem;
+      opacity: 0.8;
+      margin-top: 20px;
+    }
+    
+    /* Loading spinner */
+    .loading {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1300;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .loading.active {
+      display: flex;
+    }
+    
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 5px solid #f3f3f3;
+      border-top: 5px solid var(--primary-color);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .products {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      }
+      
+      nav {
+        gap: 10px;
+        padding: 10px 0;
+      }
+      
+      nav a {
+        font-size: 1rem;
+      }
+      
+      .cart-section {
+        padding: 15px;
+      }
+      
+      .button-group {
+        flex-direction: column;
+      }
+      
+      .cart-section button {
+        width: 100%;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .products {
+        grid-template-columns: 1fr;
+      }
+      
+      header h1 {
+        font-size: 2rem;
+      }
+      
+      .language-selector {
+        top: 5px;
+        right: 5px;
+        padding: 5px 8px;
+        font-size: 0.9rem;
+      }
+      
+      .language-selector select {
+        font-size: 0.9rem;
+      }
+      
+      .category h2 {
+        font-size: 1.5rem;
+      }
     }
   </style>
+  <!-- Font Awesome para iconos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-0HJT1XQEWQ" crossorigin="anonymous"></script>
@@ -267,8 +604,12 @@
   </script>
 </head>
 <body>
+  <div class="loading" id="loading">
+    <div class="spinner"></div>
+  </div>
+
   <div class="language-selector" aria-label="Selector de idioma">
-    <label for="languageSelect">Idioma:</label>
+    <label for="languageSelect"><i class="fas fa-language"></i></label>
     <select id="languageSelect">
       <option value="es">Español</option>
       <option value="en">English</option>
@@ -286,55 +627,61 @@
   </header>
 
   <nav>
-    <a href="#pastelitos" data-i18n="nav.pastelitos">Pastelitos</a>
-    <a href="#postres" data-i18n="nav.postres">Postres</a>
-    <a href="#bebidas" data-i18n="nav.bebidas">Bebidas</a>
-    <a href="#partybox" data-i18n="nav.partybox">Party Box</a>
-    <a href="#carrito" data-i18n="nav.carrito">Carrito</a>
+    <a href="#pastelitos" data-i18n="nav.pastelitos" class="active"><i class="fas fa-pastafarianism"></i> <span>Pastelitos</span></a>
+    <a href="#postres" data-i18n="nav.postres"><i class="fas fa-ice-cream"></i> <span>Postres</span></a>
+    <a href="#bebidas" data-i18n="nav.bebidas"><i class="fas fa-glass-whiskey"></i> <span>Bebidas</span></a>
+    <a href="#partybox" data-i18n="nav.partybox"><i class="fas fa-box-open"></i> <span>Party Box</span></a>
+    <a href="#carrito" data-i18n="nav.carrito"><i class="fas fa-shopping-cart"></i> <span>Carrito</span></a>
   </nav>
 
   <main>
     <section class="section category" id="pastelitos">
-      <h2 data-i18n="categories.pastelitos">Pastelitos</h2>
+      <h2 data-i18n="categories.pastelitos"><i class="fas fa-pastafarianism"></i> Pastelitos</h2>
       <div class="products" id="pastelitos-list"></div>
     </section>
 
     <section class="section category" id="postres">
-      <h2 data-i18n="categories.postres">Postres</h2>
+      <h2 data-i18n="categories.postres"><i class="fas fa-ice-cream"></i> Postres</h2>
       <div class="products" id="postres-list"></div>
     </section>
 
     <section class="section category" id="bebidas">
-      <h2 data-i18n="categories.bebidas">Bebidas</h2>
+      <h2 data-i18n="categories.bebidas"><i class="fas fa-glass-whiskey"></i> Bebidas</h2>
       <div class="products" id="bebidas-list"></div>
     </section>
 
     <section class="section category" id="partybox">
-      <h2 data-i18n="categories.partybox">Party Box</h2>
+      <h2 data-i18n="categories.partybox"><i class="fas fa-box-open"></i> Party Box</h2>
       <div class="products" id="partybox-list"></div>
     </section>
 
     <section class="section cart-section" id="carrito" aria-live="polite" aria-label="Carrito de compras">
-      <h3 data-i18n="cart.title">Carrito de Compras</h3>
+      <h3 data-i18n="cart.title"><i class="fas fa-shopping-cart"></i> Carrito de Compras</h3>
       <div id="cart-items"></div>
+      <div id="cart-total" class="cart-total"></div>
       <div class="button-group">
         <button id="vaciar-carrito" class="vaciar" aria-label="Vaciar carrito">
-          Vaciar carrito
+          <i class="fas fa-trash-alt"></i> <span data-i18n="cart.emptyBtn">Vaciar carrito</span>
         </button>
         <button id="confirmar-pedido" aria-label="Confirmar pedido">
-          Enviar Pedido por WhatsApp
+          <i class="fab fa-whatsapp"></i> <span data-i18n="cart.confirmBtn">Enviar Pedido por WhatsApp</span>
         </button>
       </div>
     </section>
   </main>
 
   <footer>
+    <div class="social-links">
+      <a href="https://www.facebook.com/PastelitosTime" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://www.instagram.com/PastelitosTime" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="https://chat.whatsapp.com/KlmzqDvkBWC89XGVYSg4om" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+    </div>
     <p>
-      <span data-i18n="footer.phone">Teléfono</span>: +1 (609) 336-1797 |
-      <span data-i18n="footer.whatsapp">WhatsApp</span>: +1 (609) 336-1797
+      <span data-i18n="footer.phone"><i class="fas fa-phone"></i> Teléfono</span>: +1 (609) 336-1797 |
+      <span data-i18n="footer.whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</span>: +1 (609) 336-1797
     </p>
-    <p><span data-i18n="footer.hours">Horario</span>: Lun-Dom 08:00 Am-09:00 Pm</p>
-    <p>📍 107 Bennington Drive East Windsor, NJ</p>
+    <p><span data-i18n="footer.hours"><i class="fas fa-clock"></i> Horario</span>: Lun-Dom 08:00 Am-09:00 Pm</p>
+    <p><i class="fas fa-map-marker-alt"></i> 107 Bennington Drive East Windsor, NJ</p>
     <p>
       <a
         href="https://chat.whatsapp.com/KlmzqDvkBWC89XGVYSg4om"
@@ -342,15 +689,16 @@
         rel="noopener noreferrer"
         style="color: #ffcc00; font-weight: bold;"
       >
-        Únete a nuestro grupo de WhatsApp
+        <i class="fab fa-whatsapp"></i> Únete a nuestro grupo de WhatsApp
       </a>
     </p>
+    <p class="copyright" data-i18n="footer.copyright">© 2023 Pastelitos Time. Todos los derechos reservados.</p>
   </footer>
 
   <div id="message" role="alert" aria-live="assertive"></div>
 
   <script>
-    // Traducciones
+    // Traducciones mejoradas
     const translations = {
       es: {
         title: "Pastelitos Time",
@@ -359,8 +707,7 @@
           postres: "Postres",
           bebidas: "Bebidas",
           partybox: "Party Box",
-          carrito: "Carrito",
-          contacto: "Contacto"
+          carrito: "Carrito"
         },
         categories: {
           pastelitos: "Pastelitos",
@@ -371,24 +718,23 @@
         cart: {
           title: "Carrito de Compras",
           emptyBtn: "Vaciar carrito",
-          confirmBtn: "agregar",
+          confirmBtn: "Enviar Pedido",
           emptyMsg: "Tu carrito está vacío",
           qtyLabel: "Cantidad",
-          remove: "Eliminar"
-        },
-        modal: {
-          title: "Resumen de Compra",
-          prepTime: "Tiempo estimado de preparación",
-          paymentMethod: "Método de Pago",
-          zelleNumber: "Número Zelle",
-          confirmBtn: "Confirmar y Enviar",
-          cancelBtn: "Cancelar",
-          emptyCart: "No hay productos en el carrito."
+          remove: "Eliminar",
+          total: "Total:"
         },
         footer: {
           phone: "Teléfono",
           whatsapp: "WhatsApp",
-          hours: "Horario"
+          hours: "Horario",
+          copyright: "© 2023 Pastelitos Time. Todos los derechos reservados."
+        },
+        messages: {
+          added: "agregado al carrito",
+          removed: "eliminado del carrito",
+          cleared: "Carrito vaciado",
+          confirmClear: "¿Seguro que quieres vaciar el carrito?"
         }
       },
       en: {
@@ -398,8 +744,7 @@
           postres: "Desserts",
           bebidas: "Drinks",
           partybox: "Party Box",
-          carrito: "Cart",
-          contacto: "Contact"
+          carrito: "Cart"
         },
         categories: {
           pastelitos: "Pastries",
@@ -410,24 +755,23 @@
         cart: {
           title: "Shopping Cart",
           emptyBtn: "Empty Cart",
-          confirmBtn: "Add to cart",
+          confirmBtn: "Send Order",
           emptyMsg: "Your cart is empty",
           qtyLabel: "Quantity",
-          remove: "Remove"
-        },
-        modal: {
-          title: "Order Summary",
-          prepTime: "Estimated Preparation Time",
-          paymentMethod: "Payment Method",
-          zelleNumber: "Zelle Number",
-          confirmBtn: "Confirm and Send",
-          cancelBtn: "Cancel",
-          emptyCart: "No products in cart."
+          remove: "Remove",
+          total: "Total:"
         },
         footer: {
           phone: "Phone",
           whatsapp: "WhatsApp",
-          hours: "Hours"
+          hours: "Hours",
+          copyright: "© 2023 Pastelitos Time. All rights reserved."
+        },
+        messages: {
+          added: "added to cart",
+          removed: "removed from cart",
+          cleared: "Cart emptied",
+          confirmClear: "Are you sure you want to empty the cart?"
         }
       },
       fr: {
@@ -437,8 +781,7 @@
           postres: "Desserts",
           bebidas: "Boissons",
           partybox: "Boîte de Fête",
-          carrito: "Panier",
-          contacto: "Contact"
+          carrito: "Panier"
         },
         categories: {
           pastelitos: "Pâtisseries",
@@ -449,46 +792,60 @@
         cart: {
           title: "Panier d'achat",
           emptyBtn: "Vider le panier",
-          confirmBtn: "Ajouter au Panier",
+          confirmBtn: "Envoyer la commande",
           emptyMsg: "Votre panier est vide",
           qtyLabel: "Quantité",
-          remove: "Supprimer"
-        },
-        modal: {
-          title: "Résumé de la commande",
-          prepTime: "Temps de préparation estimé",
-          paymentMethod: "Méthode de paiement",
-          zelleNumber: "Numéro Zelle",
-          confirmBtn: "Confirmer et envoyer",
-          cancelBtn: "Annuler",
-          emptyCart: "Aucun produit dans le panier."
+          remove: "Supprimer",
+          total: "Total:"
         },
         footer: {
           phone: "Téléphone",
           whatsapp: "WhatsApp",
-          hours: "Heures"
+          hours: "Heures",
+          copyright: "© 2023 Pastelitos Time. Tous droits réservés."
+        },
+        messages: {
+          added: "ajouté au panier",
+          removed: "supprimé du panier",
+          cleared: "Panier vidé",
+          confirmClear: "Voulez-vous vraiment vider le panier?"
         }
       }
     };
 
-    // Productos
+    // Productos mejorados con descripciones
     const products = {
       pastelitos: [
         {
           id: "pollo",
           name: { es: "Pollo", en: "Chicken", fr: "Poulet" },
+          description: {
+            es: "Delicioso pastelito relleno de pollo sazonado",
+            en: "Delicious pastry filled with seasoned chicken",
+            fr: "Délicieux chausson fourré au poulet assaisonné"
+          },
           price: 3.0,
           img: "https://imgur.com/y7wL3bc.png"
         },
         {
           id: "carne",
           name: { es: "Carne", en: "Beef", fr: "Boeuf" },
+          description: {
+            es: "Pastelito de carne molida con especias",
+            en: "Ground beef pastry with spices",
+            fr: "Chausson de viande hachée épicée"
+          },
           price: 3.0,
           img: "https://imgur.com/jQBvngg.png"
         },
         {
           id: "queso",
           name: { es: "Queso", en: "Cheese", fr: "Fromage" },
+          description: {
+            es: "Pastelito relleno de queso derretido",
+            en: "Pastry filled with melted cheese",
+            fr: "Chausson fourré au fromage fondu"
+          },
           price: 3.0,
           img: "https://imgur.com/t9qUjhE.png"
         },
@@ -499,24 +856,44 @@
             en: "Potato with Cheese",
             fr: "Pomme de terre avec fromage"
           },
+          description: {
+            es: "Puré de papa con queso derretido",
+            en: "Mashed potatoes with melted cheese",
+            fr: "Purée de pommes de terre avec fromage fondu"
+          },
           price: 3.0,
           img: "https://imgur.com/DKHlMnr.png"
         },
         {
           id: "Pizza",
-          name: { es: "Pizza", en: "Pizza", fr: "pizza" },
+          name: { es: "Pizza", en: "Pizza", fr: "Pizza" },
+          description: {
+            es: "Sabor pizza con jamón, queso y salsa de tomate",
+            en: "Pizza flavor with ham, cheese and tomato sauce",
+            fr: "Saveur pizza avec jambon, fromage et sauce tomate"
+          },
           price: 3.0,
           img: "https://imgur.com/ltP2GEL.png"
         },
         {
           id: "jamon_queso",
           name: { es: "Jamón y Queso", en: "Ham and Cheese", fr: "Jambon et fromage" },
+          description: {
+            es: "Clásica combinación de jamón y queso",
+            en: "Classic ham and cheese combination",
+            fr: "Combinaison classique de jambon et fromage"
+          },
           price: 3.0,
           img: "https://imgur.com/WT2Ft3R.png"
         },
         {
           id: "tequeno",
           name: { es: "Tequeño", en: "Cheese Stick", fr: "Bâtonnet de Fromage" },
+          description: {
+            es: "Palito de queso envuelto en masa crujiente",
+            en: "Cheese stick wrapped in crispy dough",
+            fr: "Bâtonnet de fromage enveloppé de pâte croustillante"
+          },
           price: 2.0,
           img: "https://imgur.com/1WYoL1t.png"
         }
@@ -525,6 +902,11 @@
         {
           id: "jugo_Limon",
           name: { es: "Jugo Limón", en: "Lemon Juice", fr: "Jus de citron" },
+          description: {
+            es: "Refrescante jugo de limón natural",
+            en: "Refreshing natural lemon juice",
+            fr: "Jus de citron naturel rafraîchissant"
+          },
           price: 4.0,
           img: "https://i.imgur.com/7DCxwvO.png"
         },
@@ -535,21 +917,36 @@
             en: "Passion Fruit Juice",
             fr: "Jus de fruit de la passion"
           },
+          description: {
+            es: "Exótico jugo de maracuyá",
+            en: "Exotic passion fruit juice",
+            fr: "Jus exotique de fruit de la passion"
+          },
           price: 4.0,
           img: "https://i.imgur.com/XDZC5G0.png"
         },
         {
           id: "tamarindo",
           name: { es: "Jugo de Tamarindo", en: "Tamarind Juice", fr: "Jus de Tamarinde" },
+          description: {
+            es: "Jugo dulce y ácido de tamarindo",
+            en: "Sweet and sour tamarind juice",
+            fr: "Jus de tamarin doux et acidulé"
+          },
           price: 4.0,
           img: "https://i.imgur.com/wXlkm6p.png"
         },
         {
-          id: "Agua Panela con Limon",
+          id: "Agua_Panela_Limon",
           name: {
-            es: "Agua Panela con Limon",
+            es: "Agua Panela con Limón",
             en: "Panela Water with Lime",
             fr: "Eau de Panela au Citron vert"
+          },
+          description: {
+            es: "Bebida tradicional con panela y limón",
+            en: "Traditional drink with panela and lime",
+            fr: "Boisson traditionnelle à la panela et citron vert"
           },
           price: 4.0,
           img: "https://imgur.com/7ASFu4A.png"
@@ -557,12 +954,22 @@
         {
           id: "Refresco",
           name: { es: "Refresco", en: "Soft Drink", fr: "Soda" },
+          description: {
+            es: "Refresco en lata (Coca-Cola, Sprite, Fanta)",
+            en: "Canned soft drink (Coke, Sprite, Fanta)",
+            fr: "Soda en canette (Coca-Cola, Sprite, Fanta)"
+          },
           price: 1.0,
           img: "https://i.imgur.com/tsUUJDU.png"
         },
         {
           id: "Malta",
           name: { es: "Malta Maltin Polar", en: "Malt Drink", fr: "Boisson Maltée" },
+          description: {
+            es: "Malta venezolana tradicional",
+            en: "Traditional Venezuelan malt drink",
+            fr: "Boisson maltée vénézuélienne traditionnelle"
+          },
           price: 3.0,
           img: "https://imgur.com/556IVMv.png"
         }
@@ -571,18 +978,33 @@
         {
           id: "Flan",
           name: { es: "Flan", en: "Flan", fr: "Flan" },
+          description: {
+            es: "Clásico flan de huevo con caramelo",
+            en: "Classic egg flan with caramel",
+            fr: "Flan classique aux œufs avec caramel"
+          },
           price: 25.0,
           img: "https://i.imgur.com/kyBJJYf.png"
         },
         {
           id: "Tres_leche_mediano",
           name: { es: "Tres Leche Mediano", en: "Medium Tres Leches", fr: "Trois Laits Moyen" },
+          description: {
+            es: "Bizcocho empapado en tres tipos de leche (mediano)",
+            en: "Cake soaked in three kinds of milk (medium)",
+            fr: "Gâteau imbibé de trois types de lait (moyen)"
+          },
           price: 25.0,
           img: "https://i.imgur.com/AGrtUKt.png"
         },
         {
           id: "tresleches_grande",
           name: { es: "Tres Leches Grande", en: "Large Tres Leches", fr: "Grand Trois Laits" },
+          description: {
+            es: "Bizcocho empapado en tres tipos de leche (grande)",
+            en: "Cake soaked in three kinds of milk (large)",
+            fr: "Gâteau imbibé de trois types de lait (grand)"
+          },
           price: 65.0,
           img: "https://i.imgur.com/aYZy8VI.png"
         }
@@ -591,48 +1013,82 @@
         {
           id: "box40",
           name: { es: "Party Box 40 unidades", en: "Party Box 40 units", fr: "Boîte de Fête 40 unités" },
+          description: {
+            es: "40 pastelitos variados (pollo, carne, queso, jamón y queso)",
+            en: "40 assorted pastries (chicken, beef, cheese, ham and cheese)",
+            fr: "40 chaussons assortis (poulet, bœuf, fromage, jambon et fromage)"
+          },
           price: 55.0,
-          img: "https://imgur.com/3ammoUs.png",
-                  },
+          img: "https://imgur.com/3ammoUs.png"
+        },
         {
           id: "box50",
           name: { es: "Party Box 50 unidades", en: "Party Box 50 units", fr: "Boîte de Fête 50 unités" },
+          description: {
+            es: "50 pastelitos variados (pollo, carne, queso, jamón y queso)",
+            en: "50 assorted pastries (chicken, beef, cheese, ham and cheese)",
+            fr: "50 chaussons assortis (poulet, bœuf, fromage, jambon et fromage)"
+          },
           price: 65.0,
-          img: "https://imgur.com/3ammoUs.png",
-           },
+          img: "https://imgur.com/3ammoUs.png"
+        },
         {
           id: "box80",
           name: { es: "Party Box 80 unidades", en: "Party Box 80 units", fr: "Boîte de Fête 80 unités" },
+          description: {
+            es: "80 pastelitos variados (pollo, carne, queso, jamón y queso)",
+            en: "80 assorted pastries (chicken, beef, cheese, ham and cheese)",
+            fr: "80 chaussons assortis (poulet, bœuf, fromage, jambon et fromage)"
+          },
           price: 100.0,
-          img: "https://imgur.com/3ammoUs.png",
-          
+          img: "https://imgur.com/3ammoUs.png"
         },
         {
           id: "box100",
           name: { es: "Party Box 100 unidades", en: "Party Box 100 units", fr: "Boîte de Fête 100 unités" },
+          description: {
+            es: "100 pastelitos variados (pollo, carne, queso, jamón y queso)",
+            en: "100 assorted pastries (chicken, beef, cheese, ham and cheese)",
+            fr: "100 chaussons assortis (poulet, bœuf, fromage, jambon et fromage)"
+          },
           price: 125.0,
-          img: "https://imgur.com/3ammoUs.png",
-           }
+          img: "https://imgur.com/3ammoUs.png"
+        }
       ]
     };
 
     // Variables globales
     let carrito = JSON.parse(localStorage.getItem('carritoPastelitosTime')) || {};
+    let currentLang = localStorage.getItem("pastelitosTimeLang") || "es";
 
-    // Mostrar mensaje temporal (éxito o error)
-    function mostrarMensaje(texto, duracion = 3000) {
+    // Mostrar mensaje temporal
+    function mostrarMensaje(texto, esError = false, duracion = 3000) {
       const msg = document.getElementById("message");
       msg.textContent = texto;
-      msg.classList.add("show");
+      msg.className = esError ? "error show" : "show";
+      
       clearTimeout(msg.timeout);
       msg.timeout = setTimeout(() => {
-        msg.classList.remove("show");
+        msg.className = "";
       }, duracion);
+    }
+
+    // Mostrar/ocultar loading
+    function toggleLoading(mostrar) {
+      document.getElementById("loading").classList.toggle("active", mostrar);
     }
 
     // Guardar carrito en localStorage
     function guardarCarrito() {
       localStorage.setItem('carritoPastelitosTime', JSON.stringify(carrito));
+    }
+
+    // Función para desplazarse al carrito
+    function scrollToCart() {
+      const cartSection = document.getElementById('carrito');
+      setTimeout(() => {
+        cartSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }, 100);
     }
 
     // Crear elemento HTML para un producto
@@ -642,71 +1098,80 @@
       div.setAttribute("tabindex", "0");
       div.setAttribute(
         "aria-label",
-        `${product.name[lang]} $${product.price.toFixed(2)}. Agregar al carrito`
+        `${product.name[lang]} $${product.price.toFixed(2)}. ${translations[lang].cart.confirmBtn}`
       );
       
-      let html = `
-        <img src="${product.img}" alt="${product.name[lang]}" />
+      div.innerHTML = `
+        <img src="${product.img}" alt="${product.name[lang]}" loading="lazy" />
         <h3>${product.name[lang]}</h3>
-        <p>$${product.price.toFixed(2)}</p>
-      `;
-      
-      // Agregar descripción si existe (para Party Box)
-      if (product.description) {
-        html += `<p style="font-size: 0.9em; color: #666;">${product.description[lang]}</p>`;
-      }
-      
-      html += `
-        <div>
-          <label for="qty-${product.id}" style="display:none;">${translations[lang].cart.qtyLabel}</label>
+        ${product.description ? `<p class="description">${product.description[lang]}</p>` : ''}
+        <p class="price">$${product.price.toFixed(2)}</p>
+        <div class="product-actions">
           <input
             type="number"
             id="qty-${product.id}"
             min="1"
             max="20"
             value="1"
-            aria-label="${translations[lang].cart.qtyLabel} ${product.name[lang]}"
-            style="width: 50px; margin-right: 5px;"
+            aria-label="${translations[lang].cart.qtyLabel}"
           />
           <button
             type="button"
-            aria-label="Agregar ${product.name[lang]} al carrito"
             class="add-to-cart-btn"
+            aria-label="${translations[lang].cart.confirmBtn} ${product.name[lang]}"
           >
             ${translations[lang].cart.confirmBtn}
           </button>
         </div>
       `;
       
-      div.innerHTML = html;
       return div;
     }
 
     // Renderizar productos por categoría
     function renderizarProductos(lang) {
-      Object.keys(products).forEach((category) => {
-        const contenedor = document.getElementById(`${category}-list`);
-        if (contenedor) {
-          contenedor.innerHTML = "";
-          products[category].forEach((product) => {
-            const prodElem = crearProductoElemento(product, lang);
-            const btn = prodElem.querySelector(".add-to-cart-btn");
-            const qtyInput = prodElem.querySelector(`input[id="qty-${product.id}"]`);
-            btn.addEventListener("click", () =>
-              agregarAlCarrito(product.id, parseInt(qtyInput.value, 10), lang)
-            );
-            contenedor.appendChild(prodElem);
-          });
-        }
-      });
+      toggleLoading(true);
+      
+      // Simular carga asíncrona para mejor experiencia
+      setTimeout(() => {
+        Object.keys(products).forEach((category) => {
+          const contenedor = document.getElementById(`${category}-list`);
+          if (contenedor) {
+            contenedor.innerHTML = "";
+            products[category].forEach((product) => {
+              const prodElem = crearProductoElemento(product, lang);
+              const btn = prodElem.querySelector(".add-to-cart-btn");
+              const qtyInput = prodElem.querySelector(`input[id="qty-${product.id}"]`);
+              
+              btn.addEventListener("click", () => {
+                const cantidad = parseInt(qtyInput.value, 10) || 1;
+                agregarAlCarrito(product.id, cantidad, lang);
+                qtyInput.value = 1; // Resetear cantidad después de agregar
+              });
+              
+              // Permitir agregar con Enter en el input
+              qtyInput.addEventListener("keypress", (e) => {
+                if (e.key === "Enter") {
+                  const cantidad = parseInt(qtyInput.value, 10) || 1;
+                  agregarAlCarrito(product.id, cantidad, lang);
+                  qtyInput.value = 1;
+                }
+              });
+              
+              contenedor.appendChild(prodElem);
+            });
+          }
+        });
+        toggleLoading(false);
+      }, 500);
     }
 
-    // Agregar producto al carrito con la cantidad indicada
-    function agregarAlCarrito(productId, cantidadSolicitada, lang) {
-      if (cantidadSolicitada < 1) cantidadSolicitada = 1;
-      if (cantidadSolicitada > 20) cantidadSolicitada = 20;
+    // Agregar producto al carrito
+    function agregarAlCarrito(productId, cantidad, lang) {
+      if (cantidad < 1) cantidad = 1;
+      if (cantidad > 20) cantidad = 20;
 
-      // Buscar producto en las categorías
+      // Buscar producto
       let prod = null;
       for (const cat in products) {
         prod = products[cat].find((p) => p.id === productId);
@@ -715,29 +1180,32 @@
       if (!prod) return;
 
       if (carrito[productId]) {
-        carrito[productId].cantidad += cantidadSolicitada;
+        carrito[productId].cantidad += cantidad;
       } else {
-        carrito[productId] = { ...prod, cantidad: cantidadSolicitada };
+        carrito[productId] = { ...prod, cantidad: cantidad };
       }
 
       guardarCarrito();
       renderizarCarrito(lang);
       animarAgregar(productId);
+      
       mostrarMensaje(
-        `${carrito[productId].name[lang]} x${cantidadSolicitada} agregado${cantidadSolicitada > 1 ? 's' : ''} al carrito`
+        `${prod.name[lang]} x${cantidad} ${translations[lang].messages.added}`
       );
+      
+      // scrollToCart(); // eliminado para evitar scroll automático
     }
 
-    // Animar al agregar producto
+    // Animar producto al agregar al carrito
     function animarAgregar(productId) {
-      const allProducts = document.querySelectorAll(".product");
-      allProducts.forEach((prodElem) => {
+      document.querySelectorAll(".product").forEach((prodElem) => {
         const img = prodElem.querySelector("img");
         if (!img) return;
+        
         const alt = img.alt;
         for (const cat in products) {
           const prod = products[cat].find(
-            (p) => p.name.es === alt || p.name.en === alt || p.name.fr === alt
+            (p) => p.name[currentLang] === alt
           );
           if (prod && prod.id === productId) {
             prodElem.classList.add("added-animation");
@@ -752,16 +1220,23 @@
     // Renderizar carrito
     function renderizarCarrito(lang) {
       const contenedor = document.getElementById("cart-items");
+      const totalContainer = document.getElementById("cart-total");
       contenedor.innerHTML = "";
 
       const keys = Object.keys(carrito);
       if (keys.length === 0) {
         contenedor.textContent = translations[lang].cart.emptyMsg;
+        totalContainer.textContent = "";
         return;
       }
 
+      let total = 0;
+      
       keys.forEach((id) => {
         const item = carrito[id];
+        const subtotal = item.price * item.cantidad;
+        total += subtotal;
+        
         const div = document.createElement("div");
         div.className = "cart-item";
         div.innerHTML = `
@@ -773,45 +1248,50 @@
             value="${item.cantidad}"
             aria-label="${translations[lang].cart.qtyLabel} ${item.name[lang]}"
           />
-          <span>$${(item.price * item.cantidad).toFixed(2)}</span>
+          <span class="price">$${subtotal.toFixed(2)}</span>
           <button aria-label="${translations[lang].cart.remove} ${item.name[lang]}">&times;</button>
         `;
-        // Cambiar cantidad desde carrito
+        
+        // Cambiar cantidad
         div.querySelector("input").addEventListener("change", (e) => {
-          let val = parseInt(e.target.value, 10);
-          if (isNaN(val) || val < 1) val = 1;
+          let val = parseInt(e.target.value, 10) || 1;
+          if (val < 1) val = 1;
           if (val > 20) val = 20;
           e.target.value = val;
           carrito[id].cantidad = val;
           guardarCarrito();
           renderizarCarrito(lang);
         });
+        
         // Eliminar producto
         div.querySelector("button").addEventListener("click", () => {
+          mostrarMensaje(
+            `${item.name[lang]} ${translations[lang].messages.removed}`
+          );
           delete carrito[id];
           guardarCarrito();
           renderizarCarrito(lang);
-          mostrarMensaje(`${item.name[lang]} ${translations[lang].cart.remove.toLowerCase()}`);
         });
+        
         contenedor.appendChild(div);
       });
+      
+      // Mostrar total
+      totalContainer.textContent = `${translations[lang].cart.total} $${total.toFixed(2)}`;
     }
 
     // Vaciar carrito
     function vaciarCarrito(lang) {
-      const textoConfirm =
-        lang === "es"
-          ? "¿Seguro que quieres vaciar el carrito?"
-          : lang === "en"
-          ? "Are you sure you want to empty the cart?"
-          : "Voulez-vous vraiment vider le panier?";
-      if (confirm(textoConfirm)) {
+      if (Object.keys(carrito).length === 0) {
+        mostrarMensaje(translations[lang].cart.emptyMsg, true);
+        return;
+      }
+      
+      if (confirm(translations[lang].messages.confirmClear)) {
         carrito = {};
         guardarCarrito();
         renderizarCarrito(lang);
-        const textoAviso =
-          lang === "es" ? "Carrito vaciado" : lang === "en" ? "Cart emptied" : "Panier vidé";
-        mostrarMensaje(textoAviso);
+        mostrarMensaje(translations[lang].messages.cleared);
       }
     }
 
@@ -819,34 +1299,49 @@
     function confirmarPedido(lang) {
       const items = Object.values(carrito);
       if (items.length === 0) {
-        mostrarMensaje(translations[lang].cart.emptyMsg);
+        mostrarMensaje(translations[lang].cart.emptyMsg, true);
         return;
       }
-      let mensaje = `${translations[lang].cart.confirmBtn}:\n\n`;
+      
+      toggleLoading(true);
+      
+      // Formatear mensaje
+      let mensaje = `*${translations[lang].cart.title}* 🛒\n\n`;
+      mensaje += `*${translations[lang].footer.whatsapp}:* +1 (609) 336-1797\n\n`;
+      mensaje += "*Pedido:*\n";
+      
       items.forEach((item) => {
-        mensaje += `- ${item.name[lang]} x${item.cantidad} = $${(
-          item.price * item.cantidad
-        ).toFixed(2)}\n`;
+        mensaje += `➡ ${item.name[lang]} x${item.cantidad} = $${(item.price * item.cantidad).toFixed(2)}\n`;
       });
+      
       const total = items.reduce((acc, item) => acc + item.price * item.cantidad, 0);
-      mensaje += `\nTotal: $${total.toFixed(2)}\n\n`;
-      mensaje +=
-        lang === "es"
-          ? "Método de pago: Zelle\nNúmero: +1 (609) 336-1797"
-          : lang === "en"
-          ? "Payment method: Zelle\nNumber: +1 (609) 336-1797"
-          : "Méthode de paiement : Zelle\nNuméro : +1 (609) 336-1797";
-
+      mensaje += `\n*Total:* $${total.toFixed(2)}\n\n`;
+      mensaje += `*${translations[lang].footer.hours}:* 08:00 AM - 09:00 PM\n`;
+      mensaje += `*Dirección:* 107 Bennington Drive East Windsor, NJ\n\n`;
+      mensaje += "*Método de pago:*\n";
+      mensaje += "💳 Zelle: +1 (609) 336-1797\n";
+      mensaje += "💰 Efectivo al recibir\n\n";
+      mensaje += "¡Gracias por tu pedido! 🎉";
+      
+      // Codificar para URL
       const url = `https://wa.me/16093361797?text=${encodeURIComponent(mensaje)}`;
-      window.open(url, "_blank");
+      
+      // Abrir en nueva pestaña después de breve delay
+      setTimeout(() => {
+        window.open(url, "_blank");
+        toggleLoading(false);
+      }, 500);
     }
 
     // Cambiar idioma
     function cambiarIdioma(lang) {
-      // Cambiar textos estáticos con data-i18n
+      currentLang = lang;
+      
+      // Actualizar textos con data-i18n
       document.querySelectorAll("[data-i18n]").forEach((el) => {
         const keys = el.getAttribute("data-i18n").split(".");
         let text = translations[lang];
+        
         for (const key of keys) {
           if (text[key]) text = text[key];
           else {
@@ -854,38 +1349,83 @@
             break;
           }
         }
-        if (text) el.textContent = text;
+        
+        if (text) {
+          if (el.tagName === "INPUT" || el.tagName === "SELECT") {
+            el.placeholder = text;
+          } else {
+            el.textContent = text;
+          }
+        }
       });
-
+      
       // Renderizar productos y carrito
       renderizarProductos(lang);
       renderizarCarrito(lang);
-
-      // Actualizar botones
-      document.getElementById("vaciar-carrito").textContent = translations[lang].cart.emptyBtn;
-      document.getElementById("confirmar-pedido").textContent = translations[lang].cart.confirmBtn;
+      
+      // Actualizar navegación activa
+      updateActiveNav();
     }
 
-    // Iniciar app
+    // Actualizar navegación activa basada en scroll
+    function updateActiveNav() {
+      const sections = document.querySelectorAll(".category");
+      const navLinks = document.querySelectorAll("nav a");
+      
+      let currentSection = "";
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 100;
+        if (window.scrollY >= sectionTop) {
+          currentSection = section.getAttribute("id");
+        }
+      });
+      
+      navLinks.forEach(link => {
+        link.classList.remove("active");
+        if (link.getAttribute("href") === `#${currentSection}`) {
+          link.classList.add("active");
+        }
+      });
+    }
+
+    // Inicializar la aplicación
     document.addEventListener("DOMContentLoaded", () => {
       const langSelect = document.getElementById("languageSelect");
-      let lang = localStorage.getItem("pastelitosTimeLang") || "es";
-
-      langSelect.value = lang;
-      cambiarIdioma(lang);
-
+      
+      // Establecer idioma guardado o predeterminado
+      langSelect.value = currentLang;
+      cambiarIdioma(currentLang);
+      
+      // Evento para cambiar idioma
       langSelect.addEventListener("change", () => {
-        lang = langSelect.value;
-        localStorage.setItem("pastelitosTimeLang", lang);
-        cambiarIdioma(lang);
+        currentLang = langSelect.value;
+        localStorage.setItem("pastelitosTimeLang", currentLang);
+        cambiarIdioma(currentLang);
       });
-
-      document
-        .getElementById("vaciar-carrito")
-        .addEventListener("click", () => vaciarCarrito(lang));
-      document
-        .getElementById("confirmar-pedido")
-        .addEventListener("click", () => confirmarPedido(lang));
+      
+      // Eventos para botones del carrito
+      document.getElementById("vaciar-carrito").addEventListener("click", () => vaciarCarrito(currentLang));
+      document.getElementById("confirmar-pedido").addEventListener("click", () => confirmarPedido(currentLang));
+      
+      // Actualizar navegación al hacer scroll
+      window.addEventListener("scroll", updateActiveNav);
+      
+      // Scroll suave para enlaces internos
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            window.scrollTo({
+              top: target.offsetTop - 80,
+              behavior: 'smooth'
+            });
+          }
+        });
+      });
+      
+      // Inicializar navegación activa
+      updateActiveNav();
     });
   </script>
 </body>
